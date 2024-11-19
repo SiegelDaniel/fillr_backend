@@ -24,6 +24,11 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root  # Optional: for security
       - MONGO_INITDB_ROOT_PASSWORD=fillr  # Optional: for security
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   mongodb_data:
@@ -31,15 +36,3 @@ volumes:
 networks:
   app-network:
     driver: bridge
-
-# Update your Dockerfile to include MongoDB client
-FROM python:3.9-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY ./app .
-EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-
-# Add to requirements.txt
-pymongo==4.6.1
