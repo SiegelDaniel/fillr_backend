@@ -42,7 +42,7 @@ from typing import Dict, Optional
 from bson import ObjectId
 
 class PDFDocument(BaseModel):
-    id: Optional[str] = None
+    id: Optional[PyObjectId] = None
     filename: str
     file_id: str  # GridFS file ID
     size: int
@@ -52,5 +52,6 @@ class PDFDocument(BaseModel):
 
     class Config:
         json_encoders = {
-            ObjectId: str
+            ObjectId: str,
+            PyObjectId: str
         }
