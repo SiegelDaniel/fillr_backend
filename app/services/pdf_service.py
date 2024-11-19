@@ -4,6 +4,8 @@ from typing import Optional
 from fastapi import UploadFile
 from motor.motor_asyncio import AsyncIOMotorClient
 from gridfs import GridFS
+
+from config import settings
 from repositories.pdf_repository import PDFRepository
 from models.pdf_document import PDFDocument
 from datetime import datetime
